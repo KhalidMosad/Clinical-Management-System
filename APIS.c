@@ -53,24 +53,22 @@ int ModeSelection(void)
         
         int mode;
         printf("Press 1 for admin mode \npress 2 for user mode \n");
-
+        fflush(stdin);
         scanf("%d",&mode);
 
         if (mode == 1)
         {
-            static int userOp=0;
-            static int state ;
-            if(userOp == 0)
-                state = Password();
+
+            int state ;
+            state = Password();
             if(state == 1)
             {
-                userOp=1;
                 printf("________________________________________________________________________________________________\n");
                 printf("welcome in admin mode \n");
                 printf(".....................................................................\n");
 
                 printf("You have those options: \n");
-                printf("1. Add new patient record\n2. Edit patient record\n3. Reserve a slot with the doctor\n4. Cancel reservation\n");
+                printf("1. Add new patient record\n2. Edit patient record\n3. Reserve a slot with the doctor\n4. Cancel reservation\n5.Go Back\n");
                 printf("________________________________________________________________________________________________\n");
             }
             else
@@ -88,7 +86,7 @@ int ModeSelection(void)
             printf("welcome in user mode \n");
             printf(".....................................................................\n");
             printf("You have those options: \n");
-            printf("1. View patient record.\n2.View today’s reservations.\n");
+            printf("1. View patient record.\n2.View today’s reservations.\n3.Go Back\n");
             printf("________________________________________________________________________________________________\n");       
 
         }
@@ -100,7 +98,7 @@ int ModeSelection(void)
 
 void ModeDetails(List l, ListEntry e)
 {
-    int CheckStatus;
+    int CheckStatus=0;
     CheckStatus = ModeSelection();
     if (CheckStatus == 1)
     {
@@ -118,10 +116,9 @@ void ModeDetails(List l, ListEntry e)
 void AdminMode(void)
 {
     static int pos =0;
-
-    char name1[60];
     int Op;
     int search;
+    fflush(stdin);
     printf("Enter Your Choice \n");
     scanf("%d",&Op);
     if(Op == 1)
@@ -258,8 +255,13 @@ void AdminMode(void)
 
 
     }     
+    else if(Op==5)
+    {
+        ModeDetails(l,e);
+    }
     else
     {
+
 
     }
 
@@ -310,7 +312,7 @@ void UserMode(void)
                 }
                 else
                 {
-                    printf("There is no Reservation for This Id....\n");
+                    printf("There is no Slot Reservation for This Id....\n");
                     break;
                 }
 
@@ -320,9 +322,14 @@ void UserMode(void)
 
         }
     }
-    else
+    else if(Op==3)
+    {
+        ModeDetails(l,e);
+    }
+   else
     {
 
+        
     }
 
 }
