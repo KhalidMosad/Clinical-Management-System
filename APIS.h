@@ -4,6 +4,7 @@
 typedef struct slotentry
 {
  	int ID ;
+	int Patient_Id;
     char * slot;
 }SlotEntry;
 
@@ -46,3 +47,5 @@ void DeleteSlotList(int pos, SlotEntry *pe, SlotList*pl);
 void TraverseSlotList(SlotList *pl, void(*Visit)(SlotEntry));
 void DisplaySlot(SlotEntry e);
 int SequentialSearchSlots(int target, SlotList *pl);
+void ReplaceSlotList(int pos, SlotEntry e, SlotList *pl);
+

@@ -9,9 +9,9 @@ List l;
 ListEntry e; 
 SlotList s1;
 
+SlotEntry DeletedSlots[5];
 void ScreenInit(void)
 {
-
     printf("____________________________________WELCOME TO SMART CLINC RESERVATION SYSTEM__________________________________________\n\n");
     printf("_________________________________________________ ITI MINIA_________________________________________________________\n\n");
 
@@ -194,6 +194,7 @@ void AdminMode(void)
     }
     else if (Op == 3)
     {   
+        static int ItemNum =0;
         int num;
         int s2;
         int id;
@@ -224,6 +225,9 @@ void AdminMode(void)
                 printf("Hey:  %s Your ID is:%d  ,and ",e_local.name,e_local.ID);
                 printf("Your Reserved from %s\n", e3.slot);
                 DeleteSlotList(s2,&e3,&s1);
+                e3.Patient_Id =id;
+                DeletedSlots[ItemNum]=e3;
+                ItemNum++;
             }
             flag = 1;
         }
@@ -289,8 +293,32 @@ void UserMode(void)
     }
     else if (Op == 2)
     {
+        int i;
+        ListEntry e3;
+        int x = l.size;
+        for(i =0; i<x;i++)
+        {
+            RetrieveList(i,&e3,&l);
+            Display(e3);
+            
+            for(int j=0; j<=4;j++)
+            {
+                if(e3.ID == DeletedSlots[j].Patient_Id )
+                {
+                    printf("And Reversed From %s\n",DeletedSlots[j].slot);    
+                    break;                  
+                }
+                else
+                {
+                    printf("There is no Reservation for This Id....\n");
+                    break;
+                }
 
-        TraverseList(&l,&Display); 
+
+            }
+            printf("____________________________________________________________________________________________\n");
+
+        }
     }
     else
     {
@@ -476,6 +504,21 @@ void DisplaySlot(SlotEntry e)
     printf("\n");
 
 }
+
+
+void ReplaceSlotList(int pos, SlotEntry e, SlotList *pl)
+{
+   int i;
+   SlotNode * q = pl->head;
+    for(i=0; i<pos; i++)
+    {
+        q= q->link;
+    }
+    q->entry= e;
+
+}
+
+
 
 
 
